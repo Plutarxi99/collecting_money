@@ -72,7 +72,7 @@
 * Переходим в папку где будет лежать код
 
 * Копируем код с git:
-  <pre><code>git clone git@github.com:Plutarxi99/collecting_money.git</code></pre>
+  <pre><code>git@github.com:Plutarxi99/collecting_money.git</code></pre>
 
 * Создаем виртуальное окружение:
   <pre><code>python3 -m venv env</code></pre>
