@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     # приложения в сервисе
     'users',
     'payment',
@@ -159,6 +160,10 @@ else:
     STATICFILES_DIRS = (
         BASE_DIR / 'static',
     )
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -182,6 +187,32 @@ CACHES = {
     }
 }
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer_token': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        },
+    },
+    # 'LOGIN_URL': getattr(settings, 'LOGIN_URL', None),
+    # 'LOGOUT_URL': getattr(settings, 'LOGOUT_URL', None),
+    'USE_SESSION_AUTH': True,
+    'DOC_EXPANSION': None,
+    'APIS_SORTER': None,
+    'OPERATIONS_SORTER': None,
+    'JSON_EDITOR': False,
+    'SHOW_REQUEST_HEADERS': False,
+    'SUPPORTED_SUBMIT_METHODS': [
+        'get',
+        'post',
+        'put',
+        'delete',
+        'patch'
+    ],
+    'VALIDATOR_URL': '',
+}
+
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
@@ -189,6 +220,10 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

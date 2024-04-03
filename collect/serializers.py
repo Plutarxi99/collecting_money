@@ -1,8 +1,12 @@
+from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
 from collect.models import Collect
+from collect.schema import CollectSchema
+from collect.task import send_mail_about_collect
+from collect.validators import DatetimeValidator
 from payment.models import Payment
 from users.models import User
 
@@ -15,10 +19,26 @@ class CollectSerializer(ModelSerializer):
 
 class CollectCreateSerializer(ModelSerializer):
     author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    amount_now = serializers.HiddenField(default=0)
+    count_people = serializers.HiddenField(default=0)
+    donates = serializers.HiddenField(default=[])
+
+    def create(self, validated_data):
+        """
+        Дополнение при создании платежа, при платаже идет сохранения в объект Collect как платежа
+        """
+        collect: Collect = super().create(validated_data)
+        # дополнение платежа в объект группового сбора
+        # collect.donates.add(payment)
+        send_mail_about_collect.delay(collect.pk)
+        return validated_data
 
     class Meta:
         model = Collect
         fields = '__all__'
+        validators = [
+            DatetimeValidator(obj='self'),
+        ]
 
 
 class PaymentListForCollect(ModelSerializer):
@@ -31,10 +51,18 @@ class PaymentListForCollect(ModelSerializer):
         fields = ("date_pay", "amount", "sender",)
 
 
+class CollectAuthorSerializer(ModelSerializer):
+    author = SlugRelatedField(slug_field='author', queryset=User.objects.all())
+
+    class Meta:
+        model = Collect
+        fields = '__all__'
+
+
 class CollectListSerializer(ModelSerializer):
-    # donates = PaymentListForCollect(source="recipient", read_only=True, many=True) # без добавления ORM команды
     # для отображения донатов ввиде списка при получении ответа с эндпоинта
     donates = serializers.SerializerMethodField()
+    author = SlugRelatedField(slug_field='email', queryset=User.objects.all())
 
     def get_donates(self, instance: Collect):
         return PaymentListForCollect(instance.donates.filter(status=True), many=True).data
@@ -42,3 +70,12 @@ class CollectListSerializer(ModelSerializer):
     class Meta:
         model = Collect
         fields = '__all__'
+
+
+class CollectUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Collect
+        fields = ('title', 'reason', 'description', 'end_of_event', 'photo', 'amount',)
+        validators = [
+            DatetimeValidator(obj='self'),
+        ]

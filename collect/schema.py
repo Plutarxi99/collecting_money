@@ -1,5 +1,4 @@
 from typing import Any
-
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -14,6 +13,6 @@ class CollectSchema(BaseModel):
     amount: int
     amount_now: int | None = 0
     count_people: int | None = 0
-    photo: str | None = None
+    photo: Any | None = None
     end_of_event: datetime
     # donates: set | None = None

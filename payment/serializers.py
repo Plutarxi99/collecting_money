@@ -26,7 +26,7 @@ class PaymentCreateSerializer(ModelSerializer):
         collect: Collect = validated_data["recipient"]
         payment: Payment = super().create(validated_data)
         # дополнение платежа в объект группового сбора
-        collect.donates.add(payment)
+        # collect.donates.add(payment)
         add_and_save_amount_now.delay(col=collect.pk, pay=payment.pk)
         return validated_data
 
@@ -45,4 +45,7 @@ class PaymentCreateSerializer(ModelSerializer):
         fields = '__all__'
 
 
-
+class MyPaymentListSerializers(ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'

@@ -14,7 +14,10 @@ class Collect(models.Model):
 
     author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='author', **NULLABLE)
     title = models.CharField(max_length=120, verbose_name="Название сбора")
-    reason = models.PositiveSmallIntegerField(choices=Reason.choices, verbose_name="Причина сбора")
+    reason = models.PositiveSmallIntegerField(
+        choices=Reason.choices,
+        verbose_name="Причина сбора",
+    )
     description = models.CharField(max_length=1_000, verbose_name="Описание сбора", **NULLABLE)
     amount = models.PositiveIntegerField(verbose_name="Сумма сбора",
                                          validators=[
@@ -29,14 +32,17 @@ class Collect(models.Model):
     def save(
             self, *args, **kwargs
     ):
-        # получение списка кто задонатил групповому сбору
-        col_list = self.donates.filter(status=True)
-        # получение уникальных id донатеров и их подсчет
-        col_list_donat_id = col_list.aggregate(count=Count("sender_id", distinct=True))["count"]
-        # получение суммы донатов
-        col_list_donat_amount = col_list.values_list("amount", flat=True).aggregate(total=Sum("amount"))["total"]
-        self.count_people = col_list_donat_id if col_list_donat_id else 0
-        self.amount_now = col_list_donat_amount if col_list_donat_amount else 0
+        if self.id:
+            # получение списка кто задонатил групповому сбору
+            col_list = self.donates.filter(status=True)
+            # получение уникальных id донатеров и их подсчет
+            col_list_donat_id = col_list.aggregate(count=Count("sender_id", distinct=True))["count"]
+            # получение суммы донатов
+            col_list_donat_amount = col_list.values_list("amount", flat=True).aggregate(total=Sum("amount"))["total"]
+            self.count_people = col_list_donat_id if col_list_donat_id else 0
+            self.amount_now = col_list_donat_amount if col_list_donat_amount else 0
+        else:
+            pass
         super(Collect, self).save(*args, **kwargs)
 
     class Meta:
