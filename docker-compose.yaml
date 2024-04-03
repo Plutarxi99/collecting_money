@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   redis:
     image: redis:7.2.2-alpine
     container_name: redis
@@ -9,12 +8,14 @@ services:
       - 6379
     volumes:
       - redis_data:/data
+    restart: unless-stopped
 
   db:
     image: postgres:14.7-alpine
     container_name: db
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
       PGDATA: /var/lib/postgresql/data/pgdata
     env_file:
       - .env
@@ -38,6 +39,7 @@ services:
       CACHE_LOCATION: 'redis://redis:6379/0'
       CELERY_BROKER_URL: 'redis://redis:6379/0'
       CELERY_RESULT_BACKEND: 'redis://redis:6379/0'
+      ENV_TYPE: 'server'
     command: >
       sh -c "python manage.py migrate
       && python manage.py runserver 0.0.0.0:8000"
@@ -52,10 +54,16 @@ services:
     build: .
     tty: true
     container_name: celery
+    restart: unless-stopped
     env_file:
       - .env
-    command: sh -c "python3 manage.py celery_worker"
-    #      bash -c "celery -A config worker --beat --loglevel=info"
+    environment:
+      CACHE_LOCATION: 'redis://redis:6379/0'
+      CELERY_BROKER_URL: 'redis://redis:6379/0'
+      CELERY_RESULT_BACKEND: 'redis://redis:6379/0'
+      ENV_TYPE: 'server'
+    command: > 
+          sh -c "celery -A config worker --beat --loglevel=info"
     volumes:
       - .:/code
     links:
