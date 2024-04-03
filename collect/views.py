@@ -27,7 +27,7 @@ class CollectListAPIView(ListAPIView):
     """
     serializer_class = CollectListSerializer
     queryset = Collect.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class CollectMyListAPIView(ListAPIView):

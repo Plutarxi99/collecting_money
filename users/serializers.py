@@ -1,10 +1,21 @@
 from rest_framework import serializers
+from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
+from collect.models import Collect
+from collect.serializers import CollectSerializer
 from payment.models import Payment
 from payment.serializers import PaymentSerializer
 from users.models import User
 from users.services import MixinGetUser
+
+
+class PaymentSerializerForUser(ModelSerializer):
+    recipient = SlugRelatedField(slug_field='title', queryset=Collect.objects.all())
+
+    class Meta:
+        model = Payment
+        exclude = ('sender',)
 
 
 class UserSerializer(MixinGetUser, ModelSerializer):
@@ -24,19 +35,9 @@ class UserSerializer(MixinGetUser, ModelSerializer):
             for field_name in existing - allowed:
                 self.fields.pop(field_name)
 
-    def get_user_pay(self, obj):
-        return PaymentSerializer(Payment.objects.filter(sender=obj.id), many=True).data
-
-    # def to_representation(self, instance):
-    #     """Если пользователь обращается к своему профилю, то информация ограничивается"""
-    #     ret = super().to_representation(instance)
-    #     if self._user()['user'] == instance:
-    #         return UserSerializer().data
-    #     else:
-    #         ret.pop('password')
-    #         ret.pop('last_name')
-    #         ret.pop('user_pay')
-    #         return ret
+    def get_user_pay(self, instance):
+        list_pay = Payment.objects.filter(sender=instance)
+        return PaymentSerializerForUser(list_pay, many=True).data
 
     class Meta:
         model = User

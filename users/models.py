@@ -60,8 +60,8 @@ class User(AbstractUser):
             groups_filter |= Q(name=group_name)
         return self.groups.filter(groups_filter).exists()
 
-    def __str__(self):
-        return self.email
+    # def __str__(self):
+    #     return self.email
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

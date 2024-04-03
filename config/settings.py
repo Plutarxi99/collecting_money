@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 if ENV_TYPE == 'local':
     DATABASES = {
-                'default': {
-                    "ENGINE": "django.db.backends.postgresql",
-                    "NAME": os.getenv("POSTGRES_DB"),
-                    "USER": os.getenv("POSTGRES_USER"),
-                }
-            }
+        'default': {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB"),
+            "USER": os.getenv("POSTGRES_USER"),
+        }
+    }
 elif ENV_TYPE == 'server':
     DATABASES = {
         'default': {
@@ -169,8 +169,11 @@ AUTH_USER_MODEL = 'users.User'
 SUPERUSER_EMAIL = os.getenv('SUPERUSER_EMAIL')
 SUPERUSER_PASSWORD = os.getenv('SUPERUSER_PASSWORD')
 
+USER_PASSWORD = os.getenv("USER_PASSWORD")
+
 NULLABLE = {'blank': True, 'null': True}
 
+# CACHE_ENABLED = os.getenv('CACHE_ENABLED') == '1'
 CACHE_ENABLED = os.getenv('CACHE_ENABLED') == '1'
 CACHES = {
     "default": {
@@ -187,7 +190,6 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -203,11 +205,10 @@ SIMPLE_JWT = {
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 
-
 CHAT_ID_TG_TEST = os.getenv("CHAT_ID_TG_TEST")
 
 # Для сохранения задач, если прекращен процесс
-CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+# CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = "Australia/Tasmania"

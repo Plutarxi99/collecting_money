@@ -37,7 +37,7 @@ class CollectListSerializer(ModelSerializer):
     donates = serializers.SerializerMethodField()
 
     def get_donates(self, instance: Collect):
-        return PaymentListForCollect(instance.donates, many=True).data
+        return PaymentListForCollect(instance.donates.filter(status=True), many=True).data
 
     class Meta:
         model = Collect

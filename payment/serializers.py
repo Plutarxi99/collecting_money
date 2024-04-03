@@ -27,13 +27,7 @@ class PaymentCreateSerializer(ModelSerializer):
         payment: Payment = super().create(validated_data)
         # дополнение платежа в объект группового сбора
         collect.donates.add(payment)
-        # TODO: добавить задачу в Celery
-        number_task = add_and_save_amount_now.delay(col=collect.pk, pay=payment.pk)
-        # result = number_task.status
-        # if result == "SUCCESS":
-        #     return validated_data
-        # else:
-        #     return validated_data
+        add_and_save_amount_now.delay(col=collect.pk, pay=payment.pk)
         return validated_data
 
     def to_representation(self, value):

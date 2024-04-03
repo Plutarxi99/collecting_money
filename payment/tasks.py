@@ -31,7 +31,7 @@ def add_and_save_amount_now(
         payment.status = status
         payment.save()
         payment.refresh_from_db()
-        collect.amount_now += payment.amount
+        collect.donates.add(payment)
         collect.save()
         collect.refresh_from_db()
         return status
