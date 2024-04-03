@@ -44,22 +44,25 @@
 
 | Значение | Содержание | Примечание |
 |-----|-----------|-----:|
-|     **SECRET_KEY**| django-insecure-hu213gr51uh234gbrtf34oqufg35835g3q5g       |     код генерируется автоматически при создании приложения|
+|     **SECRET_KEY**| django-insecure-hu213gr51uh234gbrtf34oqufg35835g3q5g       |     код генерируется командой описаной ниже|
 |     **POSTGRES_DB**| NAME_BD   |     название базы данных |
 |     **POSTGRES_USER**| USER_BD   |     название пользователя базы данных |
 |     **POSTGRES_PASSWORD**| PASSWORD_BD   |     пароль базы данных |
 |     **POSTGRES_HOST**| HOST_BD   |     название твоего сервиса используемый для контейнеризации |
 |     **SUPERUSER_EMAIL**| email_superuser       |     установить почту суперюзера|
 |     **SUPERUSER_PASSWORD**| password_superuser       |     установить пароль суперюзера|
-|     **USER_PASSWORD**| password_user       |     установить пароль юзера|
-|     **TELEGRAM_TOKEN**| 1234567899:QWERTYUIOPSSDFGHJKLZXCVBNM<>QWERTYU         |     телеграмм токен полученный от Bot_Father|
-|     **CELERY_BROKER_URL_LOCAL**| <pre><code>redis://127.0.0.1:6379</code></pre>    |     база данных для работы celery|
-|     **CELERY_RESULT_BACKEND_LOCAL**| <pre><code>redis://127.0.0.1:6379</code></pre>    |     база данных для работы celery|
-|     **CELERY_BROKER_URL_DOCKER**| <pre><code>redis://redis:6379</code></pre>    |     база данных для работы celery в контейнере|
-|     **CELERY_RESULT_BACKEND_DOCKER**| <pre><code>redis://redis:6379</code></pre>    |     база данных для работы celery в контейнере|
-|     **CHAT_ID_TG_TEST**| 123456789   |     получение chat id пользователя для работы кастомной команды проверки бота|
+|     **USER_PASSWORD**| password_user       |     установить пароль юзера для моко данных|
 |     **ENV_TYPE**| local/server   |     для использования разных настроек для запуска локально-local для запуска с сервера-server |
-|     **HOST_IP**| 0.0.0.0   |     id- адрес твоего сервера базы данных |
+|     **HOST_IP**|  db   |     id- адрес твоего сервера базы данных |
+|     **EMAIL_HOST_USER**| <Твой почтовый адрес>       |     от кого придет почта|
+|     **EMAIL_HOST_PASSWORD**| qweq223e123edqwr       |     пароль полученный в настройках приложения для почтового сервиса P.S. Далее идет инструкция в картинках|
+|     **EMAIL_BACKEND**| django.core.mail.backends.smtp.EmailBackend       |     Настройка для джанго|
+|     **EMAIL_PORT**| 465       |     почтовый порт|
+|     **EMAIL_HOST**| <pre><code>smtp.yandex.ru</code></pre>      |      почтовый сервер, в моем случае это яндекс|
+|     **EMAIL_USE_SSL**| True       |     дефолтные настройки для почтового сервиса в моем случае это яндекс|
+|     **CELERY_BROKER_URL**| <pre><code>redis://127.0.0.1:6379</code></pre>    |     база данных для работы celery|
+|     **CELERY_RESULT_BACKEND**| <pre><code>redis://127.0.0.1:6379</code></pre>    |     база данных для работы celery|
+|     **CACHE_LOCATION**| redis://127.0.0.1:6379       |     подключение к бд редис, если это в докере, то он строится иначе и уже прописан|
 </details>
 
 <details>
@@ -118,38 +121,35 @@
 * Подключено rest_framework для использоваеть API приложения
 * Подключено rest_framework_simplejwt для использоваеть API приложения авторизации пользователя Bearer token
 * Подключено drf_yasg для создания автоматической документации и возможность работать в браузере с приложением
-* Подключено django_filters для использоваеть API приложения в публичных привычках филтрации по приятным привычкам и по дате начало привычек
-* Подключена django_celery_beat для использования и создание переодической задачи
 * Подключена django_celery для создание и использование отложенной задачи
-* Обложил тестами CRUD привычек.
 </details>
 
 <details>
 
-<summary>Запуск приложения на удаленном сервере из docker</summary>
+<summary>Как получить пароль почтового сервиса?</summary>
+Функционал:
 
-* Переходим в папку где будет лежать код:
-  <pre><code>cd /var/www/html/</code></pre>
+* Создать приложение по ссылке и создать приложение <<Почта>> и получить пароль:
+  https://id.yandex.ru/security/app-passwords
+![Screenshot from 2024-03-25 15-08-40](https://github.com/Plutarxi99/user_invite/assets/132927381/330bf584-9920-40a5-8324-5429f2d8ddc4)
 
-* Копируем код с git:
-  <pre><code>git clone <URL on GIT></code></pre>
-  
-* Копируем .env файл свои значения переменных и поменять в файле проекта deploy/habit_tracker: server_name <HOST_IP>;
+* Скопировать пароль в .env файл оставльные настройка уже готовы.
 
+</details>
 
-* Далее выполнить bash команда на установку нужных компанентов и копирование настроек сайта для его работы:
-  <pre><code>cd /var/www/html/habit_tracker/deploy/</code></pre>
-  <pre><code>sh deploy_bash.sh</code></pre>
+<details>
 
-* Создаем виртуальное окружение:
-  <pre><code>python3 -m venv env</code></pre>
-  <pre><code>source env/bin/activate</code></pre>
+<summary>Как запустить приложение в docker?</summary>
+Функционал:
 
-* Создаем контейнер:
+* Выполняем код:
   <pre><code>docker-compose build</code></pre>
-  
-* Поднимаем контейнер в фоновом режиме:
-  <pre><code>docker-compose up -d</code></pre>
+  <pre><code>docker-compose up</code></pre>
 
+* Создаем базу данных в контейнере:
+  <pre><code>docker-compose exec db psql -U postgres</code></pre>
+  <pre><code>create database your_name_db</code></pre>
 
+* Подключаемся к контейнеру:
+  <pre><code>http://127.0.0.1:8080/swagger//</code></pre>
 </details>
