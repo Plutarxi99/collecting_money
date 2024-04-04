@@ -1,12 +1,9 @@
-from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
 from collect.models import Collect
-from collect.serializers import CollectSerializer
 from payment.models import Payment
-from payment.serializers import PaymentSerializer
 from users.models import User
 from users.services import MixinGetUser
 

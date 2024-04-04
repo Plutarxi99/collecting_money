@@ -2,16 +2,12 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from rest_framework.generics import (CreateAPIView,
-                                     ListAPIView,
-                                     RetrieveAPIView,
-                                     UpdateAPIView,
-                                     DestroyAPIView)
-from rest_framework.permissions import (AllowAny,
-                                        IsAuthenticated)
+                                     ListAPIView)
+from rest_framework.permissions import IsAuthenticated
 
-from collect.models import Collect
 from payment.models import Payment
-from payment.serializers import PaymentCreateSerializer, PaymentSerializer, MyPaymentListSerializers
+from payment.serializers import (PaymentCreateSerializer,
+                                 MyPaymentListSerializers)
 
 
 class PaymentCreateAPIView(CreateAPIView):

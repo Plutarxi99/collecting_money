@@ -1,6 +1,7 @@
 amqp==5.2.0
 annotated-types==0.6.0
 asgiref==3.8.1
+astroid==2.15.8
 asttokens==2.4.1
 async-timeout==4.0.3
 billiard==4.2.0
@@ -21,7 +22,9 @@ inflection==0.5.1
 ipython==8.23.0
 jedi==0.19.1
 kombu==5.3.6
+lazy-object-proxy==1.10.0
 matplotlib-inline==0.1.6
+mccabe==0.7.0
 packaging==24.0
 parso==0.8.3
 pexpect==4.9.0
@@ -30,8 +33,10 @@ prompt-toolkit==3.0.43
 psycopg2-binary==2.9.9
 ptyprocess==0.7.0
 pure-eval==0.2.2
+pycodestyle==2.11.1
 pydantic==2.6.4
 pydantic_core==2.16.3
+pyflakes==3.2.0
 Pygments==2.17.2
 PyJWT==2.8.0
 python-dateutil==2.9.0.post0
@@ -48,3 +53,4 @@ tzdata==2024.1
 uritemplate==4.1.1
 vine==5.1.0
 wcwidth==0.2.13
+wrapt==1.16.0

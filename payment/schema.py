@@ -1,7 +1,6 @@
 from typing import Any
 
 from pydantic import BaseModel
-from datetime import datetime
 
 
 class PaymentSchema(BaseModel):

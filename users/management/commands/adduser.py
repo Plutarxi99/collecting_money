@@ -12,16 +12,20 @@ class Command(BaseCommand):
     help = 'Создает случайных пользователей'
 
     def add_arguments(self, parser):
-        parser.add_argument('total', type=int, help='Указывает сколько пользователей необходимо создать')
+        parser.add_argument('total', type=int,
+                            help='Указывает сколько пользователей необходимо создать')
 
         # Опциональный аргумент
-        parser.add_argument('-P', '--prefix', type=str, help='Префикс имени пользователя', )
+        parser.add_argument('-P', '--prefix', type=str,
+                            help='Префикс имени пользователя', )
 
         # Флаг
-        parser.add_argument('-A', '--admin', action='store_true', help='Дать пользователю права администратора')
+        parser.add_argument('-A', '--admin', action='store_true',
+                            help='Дать пользователю права администратора')
 
         # Опциональный аргумент
-        parser.add_argument('-M', '--mail', type=str, help='Дать пользователю имя почтового сервиса')
+        parser.add_argument('-M', '--mail', type=str,
+                            help='Дать пользователю имя почтового сервиса')
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']
