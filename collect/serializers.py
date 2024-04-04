@@ -1,10 +1,8 @@
-from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
 from collect.models import Collect
-from collect.schema import CollectSchema
 from collect.task import send_mail_about_collect
 from collect.validators import DatetimeValidator
 from payment.models import Payment

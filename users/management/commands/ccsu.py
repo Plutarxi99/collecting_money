@@ -5,7 +5,11 @@ from users.models import User
 
 
 class Command(BaseCommand):
-    # Создание суперюзера из-за того, что мы переопределили создание юзера. Мы не можно создать его командой createsuperuser
+    """
+    Создание суперюзера из-за того, что мы переопределили создание юзера.
+    Мы не можно создать его командой createsuperuser
+    """
+    help = "Создание суперюзера"
 
     def handle(self, *args, **options):
         user, created = User.objects.get_or_create(

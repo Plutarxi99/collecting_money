@@ -2,12 +2,8 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from collect.models import Collect
-from collect.serializers import CollectSerializer
 from payment.models import Payment
 from payment.tasks import add_and_save_amount_now
-
-
-# from payment.services.utils import add_and_save_amount_now
 
 
 class PaymentSerializer(ModelSerializer):
@@ -34,7 +30,6 @@ class PaymentCreateSerializer(ModelSerializer):
         """
         Serialize the value's class name.
         """
-        # value = {'sender': <User: admin@plut.arx>, 'amount': 1000, 'recipient': <Collect: Collect object (1)>}
         answer = {"message": f"Попoлнение на сумму {value['amount']} "
                              f"в групповой сбор {value['recipient'].title} "
                              f"Статус платежа смотри по users/my_pay"}

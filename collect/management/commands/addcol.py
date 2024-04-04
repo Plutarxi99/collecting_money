@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.core.management import BaseCommand
-from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 
 from collect.models import Collect
@@ -32,7 +30,8 @@ class Command(BaseCommand):
     help = 'Создает данные для группового сбора'
 
     def add_arguments(self, parser):
-        parser.add_argument('total', type=int, help='Указывает сколько пользователей необходимо создать')
+        parser.add_argument('total', type=int,
+                            help='Указывает сколько пользователей необходимо создать')
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']
@@ -49,7 +48,8 @@ class Command(BaseCommand):
             col = CollectSchema(
                 author=user,
                 title="Заголовок. Это тестовое наполнение базы данных",
-                reason=random.choice(Collect.Reason.values),  # получение списка из возможных причин группового сбора
+                # получение списка из возможных причин группового сбора
+                reason=random.choice(Collect.Reason.values),
                 description="Описание. Это тестовое наполнение базы данных",
                 amount=amount,
                 end_of_event=random_date(),
@@ -57,4 +57,3 @@ class Command(BaseCommand):
             created, collect = Collect.objects.get_or_create(
                 **col.model_dump()
             )
-

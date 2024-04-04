@@ -1,7 +1,4 @@
-from django.conf import settings
 from django.core.management import BaseCommand
-from django.utils.crypto import get_random_string
-from django.utils.timezone import now
 
 from collect.models import Collect
 from payment.models import Payment
@@ -9,9 +6,6 @@ from payment.schema import PaymentSchema
 
 from users.models import User
 import random
-
-from random import randrange
-from datetime import timedelta
 
 
 class Command(BaseCommand):
@@ -21,7 +15,8 @@ class Command(BaseCommand):
     help = 'Создает данные для группового сбора'
 
     def add_arguments(self, parser):
-        parser.add_argument('total', type=int, help='Указывает сколько пользователей необходимо создать')
+        parser.add_argument('total', type=int,
+                            help='Указывает сколько пользователей необходимо создать')
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']

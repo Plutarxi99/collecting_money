@@ -2,8 +2,6 @@ from typing import Any
 from pydantic import BaseModel
 from datetime import datetime
 
-from users.models import User
-
 
 class CollectSchema(BaseModel):
     author: Any

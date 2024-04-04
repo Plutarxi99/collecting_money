@@ -1,7 +1,5 @@
-from drf_yasg import openapi
 from rest_framework.generics import (CreateAPIView,
                                      ListAPIView,
-                                     RetrieveAPIView,
                                      UpdateAPIView,
                                      DestroyAPIView)
 from rest_framework.permissions import (AllowAny,
@@ -9,19 +7,15 @@ from rest_framework.permissions import (AllowAny,
 
 from collect.models import Collect
 from collect.permissions import IsUserCreator
-from collect.serializers import (CollectSerializer,
-                                 CollectCreateSerializer,
+from collect.serializers import (CollectCreateSerializer,
                                  CollectListSerializer,
                                  CollectUpdateSerializer)
 
-from rest_framework.decorators import schema
 from rest_framework import parsers
 from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_cookie, vary_on_headers
-
-# from collect.task import send_mail_about_collect
+from django.views.decorators.vary import vary_on_cookie
 
 
 class CollectCreateAPIView(CreateAPIView):
@@ -55,11 +49,10 @@ class CollectCreateAPIView(CreateAPIView):
         new_obj = super(CollectCreateAPIView, self).create(request, *args, **kwargs)
         return new_obj
 
+
 class CollectListAPIView(ListAPIView):
     """
     Получение всех групповых сборов
-
-
     """
     serializer_class = CollectListSerializer
     queryset = Collect.objects.all().order_by('id')

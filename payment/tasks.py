@@ -3,7 +3,6 @@ from django.conf import settings
 
 from collect.models import Collect
 from payment.models import Payment
-import time
 import asyncio
 from django.core.mail import send_mail
 
