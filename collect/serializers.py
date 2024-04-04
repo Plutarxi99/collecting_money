@@ -60,6 +60,7 @@ class CollectAuthorSerializer(ModelSerializer):
 class CollectListSerializer(ModelSerializer):
     # для отображения донатов ввиде списка при получении ответа с эндпоинта
     donates = serializers.SerializerMethodField()
+    # отображаем вместо id почту создателя
     author = SlugRelatedField(slug_field='email', queryset=User.objects.all())
 
     def get_donates(self, instance: Collect):

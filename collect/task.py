@@ -8,6 +8,11 @@ from collect.models import Collect
 
 @shared_task()
 def send_mail_about_collect(collect_pk):
+    """
+    Задача отлоеженная на отправку сообщений с созданием группового сбора
+    @param collect_pk:
+    @return:
+    """
     collect = Collect.objects.get(pk=collect_pk)
     try:
         send_mail(

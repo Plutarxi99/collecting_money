@@ -10,9 +10,9 @@ import random
 
 class Command(BaseCommand):
     """
-    example: python3 manage.py addcol 10
+    example: python3 manage.py addpay 10
     """
-    help = 'Создает данные для группового сбора'
+    help = 'Создает данные для платежей и присваение их групповым сборам'
 
     def add_arguments(self, parser):
         parser.add_argument('total', type=int,

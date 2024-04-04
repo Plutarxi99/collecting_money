@@ -25,6 +25,11 @@ class BaseUserSerializer(ModelSerializer):
 class UserCreateSerializer(ModelSerializer):
 
     def create(self, validated_data):
+        """
+        Для установки пароля и его хэширование
+        @param validated_data:
+        @return:
+        """
         user = User(email=validated_data["email"])
         user.set_password(validated_data["password"])
         user.save()

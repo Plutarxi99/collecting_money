@@ -58,6 +58,7 @@ class CollectListAPIView(ListAPIView):
     queryset = Collect.objects.all().order_by('id')
     permission_classes = [AllowAny]
 
+    # применяем кэш на только ответы с кодом 200
     @method_decorator(cache_page(timeout=60))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
@@ -75,7 +76,8 @@ class CollectMyListAPIView(ListAPIView):
         queryset = super().get_queryset()
         user = self.request.user
         return queryset.filter(author=user)
-
+    # применяем кэш только на эндпоинты с кодом 200
+    # сохраняется ответ каждого пользователя в cookie браузера
     @method_decorator(cache_page(timeout=60))
     @method_decorator(vary_on_cookie)
     def get(self, request, *args, **kwargs):
