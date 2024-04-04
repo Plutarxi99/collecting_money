@@ -67,7 +67,7 @@
 
 <details>
 
-<summary>Как использовать?</summary>
+<summary>Как запустить?</summary>
 
 * Переходим в папку где будет лежать код
 
@@ -151,5 +151,36 @@
   <pre><code>create database your_name_db</code></pre>
 
 * Подключаемся к контейнеру:
-  <pre><code>http://127.0.0.1:8080/swagger//</code></pre>
+  <pre><code>http://127.0.0.1:8080/swagger/</code></pre>
 </details>
+<details>
+<summary>Как использовать приложение в swagger?</summary>
+Функционал:
+
+* Запускаем приложение с такими настройками в Pycharm:
+![Screenshot from 2024-04-04 11-45-51](https://github.com/Plutarxi99/collecting_money/assets/132927381/5b7af872-958b-470d-a1cb-99d74646d116)
+
+
+* Или запускаем командой из терминала:
+    <pre><code>python3 manage.py runserver</code></pre>
+
+* Переходим по ссылке:
+  <a href="http://127.0.0.1:8000/swagger/">swagger</a>
+
+* Создаем пользователя:
+  ![Screenshot from 2024-04-04 11-47-49](https://github.com/Plutarxi99/collecting_money/assets/132927381/c881fd40-4aa1-4a86-b799-75478da6638e)
+
+* Идём в авторизацию:
+  ![Screenshot from 2024-04-04 11-49-08](https://github.com/Plutarxi99/collecting_money/assets/132927381/d65ef0f5-9b4a-4601-9c72-1bdd0abfbe80)
+
+* Получаем ответ и копируем acesss token:
+  ![Screenshot from 2024-04-04 11-49-52](https://github.com/Plutarxi99/collecting_money/assets/132927381/6551ba75-ffcc-4c75-9560-561ad110be57)
+
+* Добавляем к запросам этот токен(P.S. Объязательно добавлять к вашему токену слово Bearer):
+  ![Screenshot from 2024-04-04 11-57-06](https://github.com/Plutarxi99/collecting_money/assets/132927381/a6ec7977-b0c6-43b2-9aa8-0bde5f35f7e4)
+  ![Screenshot from 2024-04-04 11-57-37](https://github.com/Plutarxi99/collecting_money/assets/132927381/abdfb5af-936f-4838-94ed-f56c3d59e7a6)
+
+* Используем дальше эндпоинты
+
+</details>
+
