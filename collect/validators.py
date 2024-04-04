@@ -4,7 +4,8 @@ from django.utils.timezone import now
 
 class DatetimeValidator:
     """
-    Валидатор для проверки поля time_run, что его значение было не больше 120 секунд
+    Валидатор для проверки поля end_of_event,
+    что его значение было в будущем
     """
 
     def __init__(self, obj):

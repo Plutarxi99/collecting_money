@@ -22,16 +22,6 @@ class UserPaymentListAPIView(RetrieveAPIView):
         return super().get(request, *args, **kwargs)
 
 
-class MyUserPaymentListAPIView(ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
-
-    @method_decorator(cache_page(timeout=60))
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
-
 class UserCreateAPIView(CreateAPIView):
     """
     Для регистрации пользователя в приложении
